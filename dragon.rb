@@ -1,7 +1,7 @@
 class Dragon
 
-  WIDTH  = 50
-  HEIGHT = 50
+  WIDTH  = 175
+  HEIGHT = 200
 
   attr_reader :x
   attr_reader :y
@@ -9,7 +9,7 @@ class Dragon
   def initialize(fond)
     @fond  = fond
     # @image = Gosu::Image.new("media/dragon.png")
-    @image = Gosu::Image.new("media/starfighter.bmp")
+    @image = Gosu::Image.new("media/dragon.png")
     @x = @y = 0
     @boat = nil
   end

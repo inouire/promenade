@@ -2,11 +2,10 @@ require 'gosu'
 require_relative 'fond'
 require_relative 'dragon'
 require_relative 'boat'
-require_relative 'player'
 require_relative 'star'
 
 module ZOrder
-  BACKGROUND, STARS, PLAYER, UI = *0..3
+  BACKGROUND, STARS, Rocket, UI = *0..3
 end
 
 SCREEN_WIDTH  = 1280
@@ -79,7 +78,7 @@ class Main < Gosu::Window
     @boat.draw
 
     # @stars.each { |star| star.draw }
-    # @font.draw_text("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
+    # @font.draw_text("Score: #{@rocket.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
   end
 
   def button_down(id)

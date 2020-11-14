@@ -1,36 +1,31 @@
-class Dragon
+require_relative 'src/lib/element'
 
-  WIDTH  = 175
-  HEIGHT = 200
+class Dragon < Element
 
-  attr_reader :x
-  attr_reader :y
+  def dimension
+    [175, 200]
+  end
 
-  def initialize(fond)
-    @fond  = fond
-    # @image = Gosu::Image.new("media/dragon.png")
-    @image = Gosu::Image.new("media/dragon.png")
-    @x = @y = 0
+  def image_path
+    "media/dragon.png"
+  end
+
+  # To override for animation
+  def is_visible?
+    true
+  end
+
+  def initialize(scene)
+    super(scene)
+
     @boat = nil
-  end
-
-  def warp(x, y)
-    @x, @y = x, y
-  end
-
-  def screen_x
-    @x + @fond.offset - (WIDTH / 2)
-  end
-
-  def screen_y
-    @y - HEIGHT
   end
 
   def go_left
     if !in_boat?
       @x -= 7
       @x = 0 if @x < 0
-      adjust_fond
+      autocam
     end
   end
 
@@ -38,7 +33,7 @@ class Dragon
     if !in_boat?
       @x += 7
       @x = SCENE_WIDTH if @x > SCENE_WIDTH
-      adjust_fond
+      autocam
     end
   end
 
@@ -53,15 +48,6 @@ class Dragon
     if !in_boat?
       @y += 7
       @y = SCENE_HEIGHT if @y > SCENE_HEIGHT
-    end
-  end
-
-  def adjust_fond
-    while screen_x > (SCREEN_WIDTH - 2 * WIDTH) && @fond.can_move_right? do
-      @fond.move_right
-    end
-    while screen_x < WIDTH && @fond.can_move_left? do
-      @fond.move_left
     end
   end
 
@@ -85,7 +71,7 @@ class Dragon
     if in_boat?
       @image.draw(@boat.screen_x, @boat.screen_y, 3)
     else
-      @image.draw(screen_x, screen_y, 3)
+      super
     end
   end
 

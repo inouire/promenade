@@ -2,7 +2,7 @@ class Fond
   attr_reader :offset
 
   def initialize
-    @image = Gosu::Image.new("media/fond.png", :tileable => true)
+    @image = Gosu::Image.new("media/lighthouse_scene.png", :tileable => true)
     @phare = Gosu::Image.new("media/phare-overlay.png", :tileable => true)
     @offset = 0
     @is_phare_lighted = false

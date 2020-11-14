@@ -1,8 +1,10 @@
+require 'byebug'
 require 'gosu'
 require_relative 'fond'
 require_relative 'dragon'
 require_relative 'boat'
 require_relative 'star'
+require_relative 'src/lighthouse_scene'
 
 module ZOrder
   BACKGROUND, STARS, Rocket, UI = *0..3
@@ -18,7 +20,9 @@ class Main < Gosu::Window
     super SCREEN_WIDTH, SCREEN_HEIGHT
     self.caption = "Promenade"
 
-    @fond = Fond.new
+    @scene = LighthouseScene.new
+
+    @fond = @scene
 
     @dragon = Dragon.new(@fond)
     @dragon.warp(400, 500)

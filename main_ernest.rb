@@ -1,3 +1,4 @@
+require 'byebug'
 require 'gosu'
 require_relative 'fond_ernest'
 require_relative 'rocket'

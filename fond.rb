@@ -6,6 +6,14 @@ class Fond
     @offset = 0
   end
 
+  def can_move_left?
+    @offset < 0
+  end
+
+  def can_move_right?
+    @offset > -(SCENE_WIDTH - SCREEN_WIDTH)
+  end
+
   def move_left
     @offset = [@offset + 10, 0].min
   end

@@ -1,13 +1,17 @@
 class Dragon
 
-  PERSO_WIDTH  = 50
-  PERSO_HEIGHT = 50
+  WIDTH  = 50
+  HEIGHT = 50
+
+  attr_reader :x
+  attr_reader :y
 
   def initialize(fond)
     @fond  = fond
     # @image = Gosu::Image.new("media/dragon.png")
     @image = Gosu::Image.new("media/starfighter.bmp")
     @x = @y = 0
+    @boat = nil
   end
 
   def warp(x, y)
@@ -15,41 +19,74 @@ class Dragon
   end
 
   def screen_x
-    @x + @fond.offset - (PERSO_WIDTH / 2)
+    @x + @fond.offset - (WIDTH / 2)
   end
 
   def screen_y
-    @y - PERSO_HEIGHT
+    @y - HEIGHT
   end
 
   def go_left
-    @x -= 7
-    adjust_fond
+    if !in_boat?
+      @x -= 7
+      @x = 0 if @x < 0
+      adjust_fond
+    end
   end
 
   def go_right
-    @x += 7
-    adjust_fond
+    if !in_boat?
+      @x += 7
+      @x = SCENE_WIDTH if @x > SCENE_WIDTH
+      adjust_fond
+    end
   end
 
   def go_up
-    @y -= 7
+    if !in_boat?
+      @y -= 7
+      @y = 0 if @y < 0
+    end
   end
 
   def go_down
-    @y += 7
+    if !in_boat?
+      @y += 7
+      @y = SCENE_HEIGHT if @y > SCENE_HEIGHT
+    end
   end
 
   def adjust_fond
-    if screen_x > (SCREEN_WIDTH - 2 * PERSO_WIDTH)
+    while screen_x > (SCREEN_WIDTH - 2 * WIDTH) && @fond.can_move_right? do
       @fond.move_right
-    elsif screen_x < PERSO_WIDTH
+    end
+    while screen_x < WIDTH && @fond.can_move_left? do
       @fond.move_left
     end
   end
 
+  def in_boat?
+    !@boat.nil?
+  end
+
+  def board(boat)
+    @boat = boat
+    boat.pilot = self
+  end
+
+  def unboard
+    @x = @boat.x - 30
+    @y = @boat.y
+    @boat.pilot = nil
+    @boat = nil
+  end
+
   def draw
-    @image.draw(screen_x, screen_y, 1)
+    if in_boat?
+      @image.draw(@boat.screen_x, @boat.screen_y, 3)
+    else
+      @image.draw(screen_x, screen_y, 3)
+    end
   end
 
 end

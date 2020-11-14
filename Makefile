@@ -1,7 +1,10 @@
 .PHONY: install run
 
-run:
-	bundle exec ruby main.rb
+barnabe:
+	bundle exec ruby main_barnabe.rb
+
+ernest:
+	bundle exec ruby main_ernest.rb
 
 install:
 	bundle install

@@ -55,6 +55,10 @@ class Rocket
     adjust_fond
   end
 
+  def velocity
+    (Math.sqrt(@vel_x**2 + @vel_y**2) * 100).floor
+  end
+
   def adjust_fond
     while screen_x > (SCREEN_WIDTH - 300) && @fond.can_move_right? do
       @fond.move_right

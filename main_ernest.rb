@@ -60,8 +60,8 @@ class Main < Gosu::Window
     # @background_image.draw(0, 0, ZOrder::BACKGROUND)
     @rocket.draw
     # @stars.each { |star| star.draw }
-    @font.draw_text("Score: #{@rocket.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
-    @font.draw_text("X,Y: #{@rocket.x.floor},#{@rocket.y.floor}", 10, 30, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
+    @font.draw_text("Vitesse: #{@rocket.velocity}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
+    # @font.draw_text("X,Y: #{@rocket.x.floor},#{@rocket.y.floor}", 10, 30, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
   end
 
   def button_down(id)

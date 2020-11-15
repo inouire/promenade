@@ -48,11 +48,14 @@ class Element
   end
 
   def autocam
-    while screen_x > @scene.screen_width - 300 && @scene.can_move_right? do
+    i = 8
+    while screen_x > @scene.screen_width - 300 && @scene.can_move_right? && i > 0 do
       @scene.move_right
+      i -= 1
     end
-    while screen_x < 300 && @scene.can_move_left? do
+    while screen_x < 300 && @scene.can_move_left? && i > 0 do
       @scene.move_left
+      i -= 1
     end
   end
 

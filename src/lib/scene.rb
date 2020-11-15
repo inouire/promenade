@@ -45,11 +45,11 @@ class Scene
   end
 
   def move_left
-    @offset_x = [@offset_x - 10, 0].max
+    @offset_x = [@offset_x - 3, 0].max
   end
 
   def move_right
-    @offset_x = [@offset_x + 10, @scene_width - @screen_width].min
+    @offset_x = [@offset_x + 3, @scene_width - @screen_width].min
   end
 
   def draw

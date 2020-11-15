@@ -18,7 +18,11 @@ class Dragon < Element
   def initialize(scene)
     super(scene)
 
+    @natural = Gosu::Image.new("media/dragon.png")
+    @elec = Gosu::Image.new("media/dragon-elec.png")
+    @eclair = Gosu::Image.new("media/eclair.png")
     @boat = nil
+    @electrocuted = false
   end
 
   def go_left
@@ -55,10 +59,15 @@ class Dragon < Element
     !@boat.nil?
   end
 
+  def electrocute!
+    @electrocuted = !@electrocuted
+  end
+
   def board(boat)
     @boat = boat
     boat.pilot = self
-    boat.pilot.autocam
+    boat.autocam
+    boat.sync_pilot
   end
 
   def unboard
@@ -70,10 +79,28 @@ class Dragon < Element
   end
 
   def draw
-    if in_boat?
-      @image.draw(@boat.screen_x - 210, @boat.screen_y - 120, z_index)
+    if !(1152..1698).include?(@x)
+      @electrocuted = false
+    end
+
+    @image = if @electrocuted
+      @elec
     else
+      @natural
+    end
+
+    if @electrocuted
+      @eclair.draw(screen_x - 20, screen_y - 350, z_index)
+      # if in_boat?
+      #   @eclair.draw(@boat.screen_x - 150, @boat.screen_y - 350, z_index)
+      # else
+      # end
+    end
+
       super
+    if in_boat?
+      # @image.draw(@boat.screen_x - 210, @boat.screen_y - 120, z_index)
+    else
     end
   end
 

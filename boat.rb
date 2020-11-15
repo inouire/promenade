@@ -31,11 +31,16 @@ class Boat < Element
     !@pilot.nil?
   end
 
+  def sync_pilot
+    @pilot.warp(@x - 130, @y - 25)
+  end
+
   def go_left
     if has_pilot?
       @x -= 12
       @x = 1330 if @x < 1330
       autocam
+      sync_pilot
     end
   end
 
@@ -44,6 +49,7 @@ class Boat < Element
       @x += 12
       @x = SCENE_WIDTH if @x > SCENE_WIDTH
       autocam
+      sync_pilot
     end
   end
 

@@ -7,6 +7,8 @@ require_relative 'src/lighthouse_scene'
 require_relative 'src/lighthouse'
 require_relative 'src/windows'
 require_relative 'src/crochet'
+require_relative 'src/caisse'
+require_relative 'src/poisson'
 
 module ZOrder
   BACKGROUND, STARS, Rocket, UI = *0..3
@@ -34,7 +36,18 @@ class Main < Gosu::Window
     @lighthouse = Lighthouse.new(@scene)
     @windows    = Windows.new(@scene)
     @crochet = Crochet.new(@scene)
-    @crochet.warp(2920, 0)
+    @crochet.warp(2920, -345)
+
+    @caisse = Caisse.new(@scene)
+    @caisse.load(@boat)
+
+    @poissons = (1..20).map do |i|
+      poisson = Poisson.new(@scene)
+      x = 1100 + rand(2000)
+      y = 790  - rand(140)
+      poisson.warp(x, y)
+      poisson
+    end
 
     @font = Gosu::Font.new(20)
   end
@@ -87,6 +100,8 @@ class Main < Gosu::Window
     if rand(1000) < 3
       @windows.toggle_light
     end
+
+    @poissons.each(&:move)
   end
 
   def draw
@@ -96,6 +111,8 @@ class Main < Gosu::Window
     @lighthouse.draw
     @windows.draw
     @crochet.draw
+    @caisse.draw
+    @poissons.each(&:draw)
   end
 
   def button_down(id)
@@ -108,6 +125,14 @@ class Main < Gosu::Window
     elsif (Gosu.button_down?(Gosu::KB_PAGE_UP) && @crochet.can_go_up?) ||
       (Gosu.button_down?(Gosu::KB_PAGE_DOWN) && @crochet.can_go_down?)
       @crochet.grince
+    elsif Gosu.button_down?(Gosu::KB_X)
+      @dragon.electrocute!
+    elsif Gosu.button_down?(Gosu::KB_B)
+      if @caisse.loaded?
+        @caisse.unload(@crochet)
+      else
+        @caisse.load(@boat)
+      end
     else
       super
     end

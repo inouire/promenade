@@ -1,19 +1,23 @@
-class Boat
+require_relative 'src/lib/element'
 
-  WIDTH  = 403
-  HEIGHT = 275
+class Boat < Element
 
-  attr_reader :x
-  attr_reader :y
-  attr_accessor :pilot
+  def dimension
+    [403, 275]
+  end
 
-  def initialize(fond)
-    @fond  = fond
-    @image = Gosu::Image.new("media/bateau.png")
+  def image_path
+    "media/bateau.png"
+  end
+
+  def initialize(scene)
+    super(scene)
+
     @pouet = Gosu::Sample.new("media/pouet.wav")
-    @x = @y = 0
     @pilot = nil
   end
+
+  attr_accessor :pilot
 
   def warp(x, y)
     @x, @y = x, y
@@ -23,19 +27,11 @@ class Boat
     !@pilot.nil?
   end
 
-  def screen_x
-    @x + @fond.offset - (WIDTH / 2)
-  end
-
-  def screen_y
-    @y - HEIGHT
-  end
-
   def go_left
     if has_pilot?
       @x -= 15
       @x = 0 if @x < 0
-      adjust_fond
+      autocam
     end
   end
 
@@ -43,19 +39,19 @@ class Boat
     if has_pilot?
       @x += 15
       @x = SCENE_WIDTH if @x > SCENE_WIDTH
-      adjust_fond
+      autocam
     end
   end
 
   def go_up
-    if has_pilot?
+    if false && has_pilot?
       @y -= 15
       @y = 0 if @y < 0
     end
   end
 
   def go_down
-    if has_pilot?
+    if false && has_pilot?
       @y += 15
       @y = SCENE_HEIGHT if @y > SCENE_HEIGHT
     end
@@ -63,19 +59,6 @@ class Boat
 
   def pouet
     @pouet.play
-  end
-
-  def adjust_fond
-    while screen_x > (SCREEN_WIDTH - 2 * WIDTH)  && @fond.can_move_right? do
-      @fond.move_right
-    end
-    while screen_x < WIDTH && @fond.can_move_left? do
-      @fond.move_left
-    end
-  end
-
-  def draw
-    @image.draw(screen_x, screen_y, 1)
   end
 
 end

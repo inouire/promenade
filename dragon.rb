@@ -61,7 +61,7 @@ class Dragon < Element
   end
 
   def unboard
-    @x = @boat.x - 30
+    @x = @boat.x - 270
     @y = @boat.y
     @boat.pilot = nil
     @boat = nil
@@ -69,7 +69,7 @@ class Dragon < Element
 
   def draw
     if in_boat?
-      @image.draw(@boat.screen_x, @boat.screen_y, 3)
+      @image.draw(@boat.screen_x - 210, @boat.screen_y - 120, 3)
     else
       super
     end

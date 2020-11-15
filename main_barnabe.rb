@@ -1,6 +1,5 @@
 require 'byebug'
 require 'gosu'
-require_relative 'fond'
 require_relative 'dragon'
 require_relative 'boat'
 require_relative 'star'
@@ -22,15 +21,11 @@ class Main < Gosu::Window
 
     @scene = LighthouseScene.new
 
-    @fond = @scene
-
-    @dragon = Dragon.new(@fond)
+    @dragon = Dragon.new(@scene)
     @dragon.warp(400, 500)
-    @boat = Boat.new(@fond)
-    @boat.warp(1400, 730)
 
-    @star_anim = Gosu::Image.load_tiles("media/star.png", 25, 25)
-    @stars = Array.new
+    @boat = Boat.new(@scene)
+    @boat.warp(1400, 540)
 
     @font = Gosu::Font.new(20)
   end
@@ -63,7 +58,7 @@ class Main < Gosu::Window
     end
 
     # Monter dans le boat
-    if Gosu.button_down?(Gosu::KB_G) && Gosu.distance(@dragon.x, @dragon.y, @boat.x, @boat.y) < 250
+    if Gosu.button_down?(Gosu::KB_G) && Gosu.distance(@dragon.x, @dragon.y, @boat.x, @boat.y) < 350
       @dragon.board(@boat)
     end
 
@@ -71,18 +66,12 @@ class Main < Gosu::Window
       @dragon.unboard
     end
 
-    # if rand(100) < 4 and @stars.size < 25
-    #   @stars.push(Star.new(@star_anim))
-    # end
   end
 
   def draw
-    @fond.draw
+    @scene.draw
     @dragon.draw
     @boat.draw
-
-    # @stars.each { |star| star.draw }
-    # @font.draw_text("Score: #{@rocket.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
   end
 
   def button_down(id)
@@ -91,7 +80,7 @@ class Main < Gosu::Window
     elsif @boat.has_pilot? && Gosu.button_down?(Gosu::KB_K)
       @boat.pouet
     elsif Gosu.button_down?(Gosu::KB_P)
-      @fond.toggle_phare
+      # @fond.toggle_phare
     else
       super
     end

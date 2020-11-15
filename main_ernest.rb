@@ -21,7 +21,7 @@ class Main < Gosu::Window
     @font = Gosu::Font.new(20)
 
     @rocket = Rocket.new(@scene)
-    @rocket.warp(150, 517)
+    @rocket.reset!
     @rocket.autocam
 
     # @star_anim = Gosu::Image.load_tiles("media/star.png", 25, 25)
@@ -29,14 +29,6 @@ class Main < Gosu::Window
   end
 
   def update
-    # Bouger le fond
-    if Gosu.button_down?(Gosu::KB_S)
-      @scene.move_left
-    end
-    if Gosu.button_down?(Gosu::KB_D)
-      @scene.move_right
-    end
-
     # Move rocket ship
     if Gosu.button_down? Gosu::KB_LEFT or Gosu::button_down? Gosu::GP_LEFT
       @rocket.turn_left
@@ -66,6 +58,10 @@ class Main < Gosu::Window
   def button_down(id)
     if id == Gosu::KB_ESCAPE
       close
+    elsif id == Gosu::KB_T
+      @rocket.explode!
+    elsif id == Gosu::KB_S
+      @rocket.reset!
     else
       super
     end

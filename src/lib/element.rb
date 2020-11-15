@@ -28,7 +28,6 @@ class Element
   end
 
   # Generic methods, can still be overriden
-
   def initialize(scene)
     @scene = scene
     @width, @height = dimension

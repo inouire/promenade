@@ -24,6 +24,14 @@ class Scene
     @screen_width, @screen_height = screen_dimension
   end
 
+  def height
+    @scene_height
+  end
+
+  def width
+    @scene_width
+  end
+
   def offset
     offset_x
   end

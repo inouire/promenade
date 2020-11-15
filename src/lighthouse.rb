@@ -1,3 +1,5 @@
+require_relative 'lib/element'
+
 class Lighthouse < Element
 
   def image_path

@@ -1,8 +1,9 @@
 require 'byebug'
 require 'gosu'
-require_relative 'fond_ernest'
-require_relative 'rocket'
 require_relative 'star'
+require_relative 'src/space_scene'
+require_relative 'src/rocket'
+
 
 module ZOrder
   BACKGROUND, STARS, ROCKET, UI = *0..3
@@ -10,32 +11,30 @@ end
 
 SCREEN_WIDTH  = 1280
 SCREEN_HEIGHT = 800
-SCENE_WIDTH  = 3330
-SCENE_HEIGHT = 800
 
 class Main < Gosu::Window
   def initialize
     super SCREEN_WIDTH, SCREEN_HEIGHT
     self.caption = "Starship"
 
-    @fond = FondErnest.new
+    @scene = SpaceScene.new
+    @font = Gosu::Font.new(20)
 
-    @rocket = Rocket.new(@fond)
+    @rocket = Rocket.new(@scene)
     @rocket.warp(150, 517)
+    @rocket.autocam
 
     # @star_anim = Gosu::Image.load_tiles("media/star.png", 25, 25)
     @stars = Array.new
-
-    @font = Gosu::Font.new(20)
   end
 
   def update
     # Bouger le fond
     if Gosu.button_down?(Gosu::KB_S)
-      @fond.move_left
+      @scene.move_left
     end
     if Gosu.button_down?(Gosu::KB_D)
-      @fond.move_right
+      @scene.move_right
     end
 
     # Move rocket ship
@@ -57,8 +56,7 @@ class Main < Gosu::Window
   end
 
   def draw
-    @fond.draw
-    # @background_image.draw(0, 0, ZOrder::BACKGROUND)
+    @scene.draw
     @rocket.draw
     # @stars.each { |star| star.draw }
     @font.draw_text("Vitesse: #{@rocket.velocity}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)

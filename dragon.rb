@@ -17,7 +17,7 @@ class Dragon < Element
 
   def initialize(scene)
     super(scene)
-
+    @voff = 0
     @natural = Gosu::Image.new("media/dragon.png")
     @elec = Gosu::Image.new("media/dragon-elec.png")
     @eclair = Gosu::Image.new("media/eclair.png")
@@ -30,6 +30,8 @@ class Dragon < Element
       @x -= 7
       @x = 0 if @x < 0
       autocam
+      @voff += 2
+      @voff %= 15
     end
   end
 
@@ -38,6 +40,8 @@ class Dragon < Element
       @x += 7
       @x = SCENE_WIDTH if @x > SCENE_WIDTH
       autocam
+      @voff += 2
+      @voff %= 15
     end
   end
 
@@ -79,7 +83,7 @@ class Dragon < Element
   end
 
   def draw
-    if !(1152..1698).include?(@x)
+    if !(1145..1698).include?(@x)
       @electrocuted = false
     end
 

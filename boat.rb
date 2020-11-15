@@ -19,6 +19,8 @@ class Boat < Element
 
     @pouet = Gosu::Sample.new("media/pouet.wav")
     @pilot = nil
+    @rot = 0
+    @dirot = 0.1
   end
 
   attr_accessor :pilot
@@ -32,7 +34,14 @@ class Boat < Element
   end
 
   def sync_pilot
-    @pilot.warp(@x - 130, @y - 25)
+    @pilot.warp(@x - 125, @y - 25)
+  end
+
+  def swing
+    @rot += @dirot
+    if @rot > 4 || @rot < -4
+      @dirot = - @dirot
+    end
   end
 
   def go_left
@@ -54,21 +63,16 @@ class Boat < Element
   end
 
   def go_up
-    if false && has_pilot?
-      @y -= 15
-      @y = 0 if @y < 0
-    end
   end
-
   def go_down
-    if false && has_pilot?
-      @y += 15
-      @y = SCENE_HEIGHT if @y > SCENE_HEIGHT
-    end
   end
 
   def pouet
     @pouet.play
+  end
+
+  def draw
+    @image.draw_rot(screen_x, screen_y, z_index, @rot)
   end
 
 end

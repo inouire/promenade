@@ -33,6 +33,7 @@ class Element
     @width, @height = dimension
     @image = Gosu::Image.new(image_path)
     @x, @y = 0, 0
+    @voff = 0
   end
 
   def warp(x, y)
@@ -62,9 +63,9 @@ class Element
   def draw
     if is_visible?
       if ref_on_center
-        @image.draw_rot(screen_x, screen_y, z_index, 0)
+        @image.draw_rot(screen_x, screen_y + @voff, z_index, 0)
       else
-        @image.draw(screen_x, screen_y, z_index)
+        @image.draw(screen_x, screen_y + @voff, z_index)
       end
     end
   end

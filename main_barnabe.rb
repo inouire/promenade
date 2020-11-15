@@ -102,6 +102,8 @@ class Main < Gosu::Window
     end
 
     @poissons.each(&:move)
+
+    @boat.swing
   end
 
   def draw

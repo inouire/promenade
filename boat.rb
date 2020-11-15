@@ -10,6 +10,10 @@ class Boat < Element
     "media/bateau.png"
   end
 
+  def z_index
+    2
+  end
+
   def initialize(scene)
     super(scene)
 
@@ -29,15 +33,15 @@ class Boat < Element
 
   def go_left
     if has_pilot?
-      @x -= 15
-      @x = 0 if @x < 0
+      @x -= 12
+      @x = 1330 if @x < 1330
       autocam
     end
   end
 
   def go_right
     if has_pilot?
-      @x += 15
+      @x += 12
       @x = SCENE_WIDTH if @x > SCENE_WIDTH
       autocam
     end

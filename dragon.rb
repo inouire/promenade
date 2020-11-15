@@ -58,6 +58,7 @@ class Dragon < Element
   def board(boat)
     @boat = boat
     boat.pilot = self
+    boat.pilot.autocam
   end
 
   def unboard
@@ -65,11 +66,12 @@ class Dragon < Element
     @y = @boat.y
     @boat.pilot = nil
     @boat = nil
+    autocam
   end
 
   def draw
     if in_boat?
-      @image.draw(@boat.screen_x - 210, @boat.screen_y - 120, 3)
+      @image.draw(@boat.screen_x - 210, @boat.screen_y - 120, z_index)
     else
       super
     end

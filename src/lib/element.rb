@@ -14,8 +14,16 @@ class Element
     "media/starfighter.bmp"
   end
 
+  def z_index
+    1
+  end
+
   # To override for animation
   def is_visible?
+    true
+  end
+
+  def ref_on_center
     true
   end
 
@@ -25,7 +33,7 @@ class Element
     @scene = scene
     @width, @height = dimension
     @image = Gosu::Image.new(image_path)
-    @x, @y = 100, 100
+    @x, @y = 0, 0
   end
 
   def warp(x, y)
@@ -50,7 +58,13 @@ class Element
   end
 
   def draw
-    @image.draw_rot(screen_x, screen_y, 3, 0)
+    if is_visible?
+      if ref_on_center
+        @image.draw_rot(screen_x, screen_y, z_index, 0)
+      else
+        @image.draw(screen_x, screen_y, z_index)
+      end
+    end
   end
 
 end

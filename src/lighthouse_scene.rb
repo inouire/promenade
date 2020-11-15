@@ -4,6 +4,7 @@ class LighthouseScene < Scene
 
   def initialize
     super
+    @grue = Gosu::Image.new("media/grue-overlay.png")
   end
 
   def image_path
@@ -16,6 +17,11 @@ class LighthouseScene < Scene
 
   def screen_dimension
     [1280, 800]
+  end
+
+  def draw
+    super
+    @grue.draw(-@offset_x, 0, 4)
   end
 
 end

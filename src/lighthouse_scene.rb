@@ -6,6 +6,7 @@ class LighthouseScene < Scene
     super
     @grue = Gosu::Image.new("media/grue-overlay.png")
     @nuage = Gosu::Image.new("media/nuage-overlay.png")
+    @pont = Gosu::Image.new("media/pont-overlay.png")
   end
 
   def image_path
@@ -24,6 +25,7 @@ class LighthouseScene < Scene
     super
     @grue.draw(-@offset_x, 0, 4)
     @nuage.draw(-@offset_x, 0, 4)
+    @pont.draw(-@offset_x, 0, 4)
   end
 
 end

@@ -9,6 +9,7 @@ require_relative 'src/windows'
 require_relative 'src/crochet'
 require_relative 'src/caisse'
 require_relative 'src/poisson'
+require_relative 'src/interior'
 
 module ZOrder
   BACKGROUND, STARS, Rocket, UI = *0..3
@@ -33,6 +34,9 @@ class Main < Gosu::Window
     @boat = Boat.new(@scene)
     @boat.warp(1400, 540)
 
+    @interior = Interior.new(@scene)
+    @interior.warp(290, 40)
+
     @lighthouse = Lighthouse.new(@scene)
     @windows    = Windows.new(@scene)
     @crochet = Crochet.new(@scene)
@@ -41,7 +45,7 @@ class Main < Gosu::Window
     @caisse = Caisse.new(@scene)
     @caisse.load(@boat)
 
-    @poissons = (1..20).map do |i|
+    @poissons = (1..50).map do |i|
       poisson = Poisson.new(@scene)
       x = 1100 + rand(2000)
       y = 790  - rand(140)
@@ -87,6 +91,16 @@ class Main < Gosu::Window
       @crochet.go_down
     end
 
+    # Entrer dans la maison
+    if Gosu.button_down?(Gosu::KB_X)
+      @dragon.leave
+    elsif Gosu::button_down?(Gosu::KB_C)
+      @dragon.enter(@interior)
+    end
+
+    # if Gosu.button_down?(Gosu::KB_W)
+    #   @dragon.leave(@interior)
+    # end
 
     # Monter dans le boat
     if Gosu.button_down?(Gosu::KB_G) && Gosu.distance(@dragon.x, @dragon.y, @boat.x, @boat.y) < 350
@@ -115,6 +129,7 @@ class Main < Gosu::Window
     @crochet.draw
     @caisse.draw
     @poissons.each(&:draw)
+    @interior.draw
   end
 
   def button_down(id)

@@ -23,6 +23,7 @@ class Dragon < Element
     @eclair = Gosu::Image.new("media/eclair.png")
     @boat = nil
     @electrocuted = false
+    @interior = nil
   end
 
   def go_left
@@ -63,6 +64,10 @@ class Dragon < Element
     !@boat.nil?
   end
 
+  def in_interior?
+    !@interior.nil?
+  end
+
   def electrocute!
     @electrocuted = !@electrocuted
   end
@@ -80,6 +85,26 @@ class Dragon < Element
     @boat.pilot = nil
     @boat = nil
     autocam
+  end
+
+  def enter(interior)
+    if !@interior
+      @interior = interior
+      @interior.dragon = self
+      @interior.is_visible = true
+      autocam
+    end
+  end
+
+  def leave
+    if @interior
+      @interior.is_visible = false
+      @interior.dragon = nil
+      @x = 0
+      @y = 0
+      @interior = nil
+      autocam
+    end
   end
 
   def draw

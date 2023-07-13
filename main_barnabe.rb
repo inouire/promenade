@@ -9,6 +9,7 @@ require_relative 'src/windows'
 require_relative 'src/crochet'
 require_relative 'src/caisse'
 require_relative 'src/poisson'
+require_relative 'src/monster'
 require_relative 'src/interior'
 
 module ZOrder
@@ -52,6 +53,14 @@ class Main < Gosu::Window
       poisson.warp(x, y)
       poisson
     end
+
+    #@monsters = (1..1).map do |i|
+      #monster = Monster.new(@scene)
+      #x = 10 + rand(500)
+      #y = 100 - rand(50)
+      #monster.warp(x, y)
+      #monster
+    #end
 
     @font = Gosu::Font.new(20)
   end
@@ -116,6 +125,7 @@ class Main < Gosu::Window
     end
 
     @poissons.each(&:move)
+#    @monsters.each(&:move)
 
     @boat.swing
   end
@@ -129,6 +139,7 @@ class Main < Gosu::Window
     @crochet.draw
     @caisse.draw
     @poissons.each(&:draw)
+ #   @monsters.each(&:draw)
     @interior.draw
   end
 
